@@ -1,6 +1,8 @@
 import streamlit as st
 import plotly.graph_objects as go
 
+from utils.loader import load_terakhir_update
+
 
 def render_component_page(
     title,
@@ -18,12 +20,20 @@ def render_component_page(
     sidebar_icon,
     inovasi=None
 ):
+    # =========================
     # SIDEBAR
+    # =========================
     with st.sidebar:
         st.image("assets/icons/single/logo.png", width=180)
+
         st.divider()
 
-        st.page_link("app.py", label="Dashboard", icon="🏠")
+        st.page_link(
+            "app.py",
+            label="Dashboard",
+            icon="🏠"
+        )
+
         st.page_link(
             sidebar_page_path,
             label=sidebar_title,
@@ -31,15 +41,22 @@ def render_component_page(
         )
 
         st.divider()
-        st.markdown("📅 **Terakhir Update**  \n26 Mei 2025 10:30 WIB")
 
+        st.markdown(
+            f"📅 **Terakhir Update**  \n{load_terakhir_update()}"
+        )
+
+    # =========================
     # HEADER
+    # =========================
     st.title(title)
     st.caption(caption)
 
     persen = nilai / bobot * 100 if bobot else 0
 
+    # =========================
     # TOP LAYOUT
+    # =========================
     left, center, right = st.columns([1.1, 1.8, 1.1])
 
     with left:
@@ -80,6 +97,7 @@ def render_component_page(
     with center:
         with st.container(border=True):
             st.subheader("Sub Komponen")
+
             st.dataframe(
                 sub_komponen,
                 use_container_width=True,
@@ -98,12 +116,19 @@ def render_component_page(
             st.caption(f"Total {total} Kriteria")
 
             c1, c2, c3 = st.columns(3)
-            c1.metric("🟢 Selesai", selesai)
-            c2.metric("🟡 Proses", proses)
-            c3.metric("🔴 Belum", belum)
+
+            with c1:
+                st.metric("🟢 Selesai", selesai)
+
+            with c2:
+                st.metric("🟡 Proses", proses)
+
+            with c3:
+                st.metric("🔴 Belum", belum)
 
         with st.container(border=True):
             st.subheader("Tindak Lanjut Prioritas")
+
             st.dataframe(
                 tindak_lanjut,
                 use_container_width=True,
@@ -112,7 +137,9 @@ def render_component_page(
 
     st.divider()
 
+    # =========================
     # BOTTOM LAYOUT
+    # =========================
     main, side = st.columns([2.2, 1])
 
     with main:
@@ -137,7 +164,7 @@ def render_component_page(
                 )
 
         # =========================
-        # INOVASI - TEPAT DI BAWAH KRITERIA
+        # INOVASI
         # =========================
         if inovasi is not None and not inovasi.empty:
             with st.container(border=True):
@@ -162,6 +189,7 @@ def render_component_page(
     with side:
         with st.container(border=True):
             st.subheader("PIC Terlibat")
+
             st.dataframe(
                 pic,
                 use_container_width=True,
@@ -170,6 +198,7 @@ def render_component_page(
 
         with st.container(border=True):
             st.subheader(f"Dokumen Pendukung {title.title()}")
+
             st.dataframe(
                 dokumen,
                 use_container_width=True,

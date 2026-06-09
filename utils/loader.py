@@ -22,5 +22,6 @@ def load_lke():
 
 def load_trend_nilai():
     return read_google_sheet(GID["Trend_Nilai"])
-    def load_terakhir_update():
+
+def load_terakhir_update():
     return "09 Juni 2026 17:30 WITA"

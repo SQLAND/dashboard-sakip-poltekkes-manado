@@ -5,6 +5,7 @@ import pandas as pd
 from utils.styles import load_css
 from utils.loader import load_trend_nilai
 from utils.loader import load_dashboard_sakip
+from utils.loader import load_terakhir_update
 
 
 st.set_page_config(
@@ -236,8 +237,9 @@ with st.sidebar:
     st.divider()
 
     st.markdown(
-        "📅 **Terakhir Update**  \n09 Juni 2026 17:30 WITA"
-    )
+        st.markdown(
+    f"📅 **Terakhir Update**  \n{load_terakhir_update()}"
+)
 
 # =========================
 # HEADER

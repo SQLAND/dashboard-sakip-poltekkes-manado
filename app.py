@@ -237,7 +237,6 @@ with st.sidebar:
     st.divider()
 
     st.markdown(
-        st.markdown(
     f"📅 **Terakhir Update**  \n{load_terakhir_update()}"
 )
 
